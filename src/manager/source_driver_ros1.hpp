@@ -193,8 +193,16 @@ inline sensor_msgs::PointCloud2 SourceDriver::ToRosMsg(const LidarDecodedFrame<L
   int fields = 6;
   ros_msg.fields.clear();
   ros_msg.fields.reserve(fields);
-  ros_msg.width = frame.points_num; 
-  ros_msg.height = 1; 
+  if (frame.column_resolution > 0 && frame.row_resolution > 0)
+  {
+    ros_msg.width = frame.row_resolution;
+    ros_msg.height = frame.column_resolution;
+  }
+  else
+  {
+    ros_msg.width = frame.points_num;
+    ros_msg.height = 1;
+  }
 
   int offset = 0;
   offset = addPointField(ros_msg, "x", 1, sensor_msgs::PointField::FLOAT32, offset);
