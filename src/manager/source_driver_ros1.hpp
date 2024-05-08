@@ -196,7 +196,7 @@ inline sensor_msgs::PointCloud2 SourceDriver::ToRosMsg(const LidarDecodedFrame<L
   if (frame.column_resolution > 0 && frame.row_resolution > 0)
   {
     ros_msg.width = frame.row_resolution;
-    ros_msg.height = frame.column_resolution;
+    ros_msg.height = frame.points_num / frame.row_resolution;
   }
   else
   {
